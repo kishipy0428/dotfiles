@@ -35,3 +35,36 @@
 ## インストール
 
 ```sh
+git clone https://github.com/kishipy0428/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+script/bootstrap
+script/install
+```
+
+インストール後、`script/status` で symlink の状態を確認できる。
+
+## カスタマイズ
+
+### 個人設定 (~/.gitconfig.local)
+
+git の `[user]` (name, email) は `~/.gitconfig.local` に書き、git 管理外にしている。
+新しいマシンでは以下を手で作成する:
+
+```
+[user]
+    name = Your Name
+    email = your@email.com
+```
+
+`git/gitconfig.symlink` の `[include]` がこれを読み込む。
+
+### Brewfile
+
+`homebrew/Brewfile` を編集してパッケージを取捨選択。
+編集後は `dot` または `brew bundle --file=homebrew/Brewfile` で反映。
+
+## 更新
+
+```sh
+dot   # brew update + script/install
+```
