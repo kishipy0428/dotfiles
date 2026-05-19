@@ -6,6 +6,8 @@
   "editor.formatOnSave": true,
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
   "workbench.startupEditor": "none",
   "terminal.integrated.fontSize": 13
 }
