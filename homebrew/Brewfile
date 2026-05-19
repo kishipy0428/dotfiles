@@ -1,0 +1,23 @@
+# 必須ツール
+brew "git"
+brew "tmux"
+brew "wget"
+brew "tree"
+brew "jq"
+
+# モダンな CLI ツール
+brew "ripgrep"   # rg - 高速 grep
+brew "fd"        # fd - 高速 find
+brew "bat"       # bat - cat の上位互換
+brew "eza"       # eza - ls の上位互換
+brew "fzf"       # fuzzy finder
+
+# 開発系
+brew "gh"        # GitHub CLI
+brew "mise"      # ランタイム/バージョン管理 (Node, Python, Ruby...)
+
+# GUI アプリ (cask)
+cask "visual-studio-code"
+cask "iterm2"
+cask "raycast"
+# cask "google-chrome"

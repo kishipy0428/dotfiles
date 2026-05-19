@@ -1,0 +1,33 @@
+# prefix を C-a に (好みで)
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
+
+# 256色
+set -g default-terminal "screen-256color"
+set -ga terminal-overrides ",xterm-256color:Tc"
+
+# マウス操作有効
+set -g mouse on
+
+# ウィンドウとペインの番号を 1 から
+set -g base-index 1
+setw -g pane-base-index 1
+
+# 設定リロード
+bind r source-file ~/.tmux.conf \; display "Reloaded!"
+
+# ペイン分割を直感的に
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+
+# vim ライクなペイン移動
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# ステータスバー
+set -g status-style bg=default,fg=white
+set -g status-left-length 40
+set -g status-right '#[fg=cyan]%Y-%m-%d %H:%M'

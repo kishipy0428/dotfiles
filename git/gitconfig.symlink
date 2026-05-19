@@ -1,0 +1,29 @@
+[include]
+	path = ~/.gitconfig.local
+
+[core]
+	editor = code --wait
+	excludesfile = ~/.gitignore_global
+	autocrlf = input
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[push]
+	default = current
+	autoSetupRemote = true
+
+[color]
+	ui = auto
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status -sb
+	last = log -1 HEAD
+	unstage = reset HEAD --
+	lg = log --oneline --graph --decorate --all

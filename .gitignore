@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# 個人設定 (include されるが管理しない)
+*.local
+
+# バックアップ
+*.backup
+
+# エディタ
+.idea/

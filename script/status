@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#
+# status - dotfiles の symlink がちゃんと張られているか確認する
+#
+# 使い方:
+#   script/status
+
+set -e
+
+cd "$(dirname "$0")/.."
+DOTFILES_ROOT=$(pwd -P)
+
+# 色の定義
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
+RESET='\033[0m'
+
+ok ()    { printf "  ${GREEN}✓${RESET} %s\n" "$1"; }
+ng ()    { printf "  ${RED}✗${RESET} %s\n" "$1"; }
+warn ()  { printf "  ${YELLOW}!${RESET} %s\n" "$1"; }
+info ()  { printf "${CYAN}%s${RESET}\n" "$1"; }
+
+ok_count=0
+ng_count=0
+warn_count=0
+
+info ""
+info "== symlink の状態 =="
+echo ""
+
+for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*'); do
+  dst="$HOME/.$(basename "${src%.*}")"
+  short_dst="~/.$(basename "${src%.*}")"
+  short_src="${src#$DOTFILES_ROOT/}"
+
+  if [ -L "$dst" ]; then
+    current="$(readlink "$dst")"
+    if [ "$current" = "$src" ]; then
+      ok "$short_dst → $short_src"
+      ok_count=$((ok_count + 1))
+    else
+      warn "$short_dst → 別の場所を指しています ($current)"
+      warn_count=$((warn_count + 1))
+    fi
+  elif [ -e "$dst" ]; then
+    warn "$short_dst → 実体ファイルが存在 (symlink ではない)"
+    warn_count=$((warn_count + 1))
+  else
+    ng "$short_dst → リンク未作成"
+    ng_count=$((ng_count + 1))
+  fi
+done
+
+echo ""
+info "== VS Code 設定 =="
+echo ""
+
+VSCODE_DIR="$HOME/Library/Application Support/Code/User"
+for f in settings.json keybindings.json; do
+  dst="$VSCODE_DIR/$f"
+  expected="$DOTFILES_ROOT/vscode/$f"
+
+  if [ -L "$dst" ]; then
+    current="$(readlink "$dst")"
+    if [ "$current" = "$expected" ]; then
+      ok "Code/User/$f → vscode/$f"
+      ok_count=$((ok_count + 1))
+    else
+      warn "Code/User/$f → 別の場所を指しています ($current)"
+      warn_count=$((warn_count + 1))
+    fi
+  elif [ -e "$dst" ]; then
+    warn "Code/User/$f → 実体ファイルが存在 (symlink ではない)"
+    warn_count=$((warn_count + 1))
+  else
+    ng "Code/User/$f → リンク未作成 (script/install で作成)"
+    ng_count=$((ng_count + 1))
+  fi
+done
+
+echo ""
+info "== サマリ =="
+printf "  ${GREEN}OK: %d${RESET}  ${YELLOW}要確認: %d${RESET}  ${RED}未作成: %d${RESET}\n" $ok_count $warn_count $ng_count
+echo ""
+
+if [ $ng_count -gt 0 ]; then
+  echo "  → 'script/bootstrap' と 'script/install' を実行してください"
+  exit 1
+fi
