@@ -9,3 +9,6 @@
 
 # エディタ
 .idea/
+
+# Claude Code の worktree など
+.claude/
