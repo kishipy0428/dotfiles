@@ -21,6 +21,7 @@
 - `mise/` — mise の shell activation
 - `tmux/` — tmux 設定
 - `vscode/` — VS Code settings / keybindings
+- `claude/` — Claude Code インストーラ
 
 ## script
 
