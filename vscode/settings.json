@@ -9,5 +9,7 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
   "workbench.startupEditor": "none",
-  "terminal.integrated.fontSize": 13
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.mouseWheelScrollSensitivity": 3,
+  "explorer.confirmDelete": false
 }

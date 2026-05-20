@@ -10,9 +10,15 @@ DOTFILES_VSCODE="$(cd "$(dirname "$0")" && pwd)"
 
 mkdir -p "$VSCODE_DIR"
 
+linked_any=0
 for f in settings.json keybindings.json; do
   src="$DOTFILES_VSCODE/$f"
   dst="$VSCODE_DIR/$f"
+
+  # 既に正しい symlink ならスキップ
+  if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
+    continue
+  fi
 
   if [ -e "$dst" ] && [ ! -L "$dst" ]; then
     echo "  Backing up existing $f to $f.backup"
@@ -21,6 +27,9 @@ for f in settings.json keybindings.json; do
 
   ln -sf "$src" "$dst"
   echo "  Linked $f"
+  linked_any=1
 done
 
-echo "  VS Code settings linked."
+if [ "$linked_any" = "1" ]; then
+  echo "  VS Code settings linked."
+fi
