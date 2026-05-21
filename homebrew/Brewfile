@@ -20,4 +20,5 @@ brew "mise"      # ランタイム/バージョン管理 (Node, Python, Ruby...)
 cask "visual-studio-code"
 cask "iterm2"
 cask "raycast"
+cask "chatgpt"
 # cask "google-chrome"

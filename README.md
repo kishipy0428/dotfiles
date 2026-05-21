@@ -22,6 +22,7 @@
 - `tmux/` — tmux 設定
 - `vscode/` — VS Code settings / keybindings
 - `claude/` — Claude Code インストーラ
+- `codex/` — OpenAI Codex CLI インストーラ
 
 ## script
 
